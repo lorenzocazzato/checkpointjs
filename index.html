@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="searchbar" />
+    <button id="button">Search</button>
+    <div id="infodiv"></div>
+  </body>
+  <script>
+    let button = document.getElementById("button");
+    let infodiv = document.getElementById("infodiv");
+
+    button.addEventListener("click", () => {
+      let searchbar = document.getElementById("searchbar").value;
+      if (searchbar) {
+        fetchFunction(searchbar);
+      }
+    });
+
+    function fetchFunction(searchbar) {
+      fetch(`https://pokeapi.co/api/v2/pokemon/${searchbar}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Nome Inesistente!");
+          }
+          return res.json().then((data) => {
+            console.log(data);
+            const info = `<h2>${data.name}</h2>
+            <img src="${data.sprites.front_default}" alt="">
+             <p>Base experience: ${data.base_experience}</p>
+             <p>Abilities: ${data.abilities.map((e) => e.ability.name)}
+                </p> `;
+
+            infodiv.innerHTML = info;
+          });
+        })
+        .catch((error) => (infodiv.innerHTML = `<p>${error.message}</p>`));
+    }
+  </script>
+</html>
