@@ -33,8 +33,9 @@
             const info = `<h2>${data.name}</h2>
             <img src="${data.sprites.front_default}" alt="">
              <p>Base experience: ${data.base_experience}</p>
-             <p>Abilities: ${data.abilities.map((e) => e.ability.name)}
-                </p> `;
+             <ul>Abilities: ${data.abilities.map(
+               (e) => `<li>${e.ability.name}</li>`
+             )} </ul>`;
 
             infodiv.innerHTML = info;
           });
